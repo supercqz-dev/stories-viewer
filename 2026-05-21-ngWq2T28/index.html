@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+  <title>说到做到的小水水</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&display=swap" rel="stylesheet"/>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{width:100%;height:100%;overflow:hidden;background:#1c1410;font-family:"PingFang SC","Microsoft YaHei",sans-serif;touch-action:pan-y}
+    .book{width:100%;height:100vh;overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center}
+    .slides-wrap{display:flex;width:100%;height:100%;transition:transform .38s cubic-bezier(.4,0,.2,1)}
+    .slide{min-width:100%;height:100%;display:flex;flex-direction:column;align-items:center;background:#fff9f2}
+    /* 9:16 图片区，自动撑满 */
+    .img-wrap{
+      width:100%;flex:1;overflow:hidden;background:#f0ebe3;
+      display:flex;align-items:center;justify-content:center
+    }
+    .img-wrap img{width:100%;height:100%;object-fit:contain}
+    .cover-slide .img-wrap img{object-fit:cover}
+    /* 封面标题 overlay */
+    .cover-img-wrap{position:relative}
+    .cover-title-overlay{
+      position:absolute;bottom:0;left:0;right:0;
+      padding:40px 24px 24px;
+      background:linear-gradient(to top,rgba(18,10,4,0.82) 0%,rgba(18,10,4,0.45) 55%,transparent 100%);
+      display:flex;align-items:flex-end;justify-content:center;
+      pointer-events:none
+    }
+    .cover-title-text{
+      font-family:"Ma Shan Zheng","STKaiti","KaiTi","华文楷体","PingFang SC",serif;
+      font-size:clamp(26px,7vw,44px);
+      color:#fff8ee;
+      letter-spacing:.12em;
+      line-height:1.3;
+      text-align:center;
+      text-shadow:0 2px 12px rgba(0,0,0,0.7),0 0 32px rgba(255,200,100,0.3);
+      white-space:pre-wrap;
+      word-break:break-all
+    }
+    /* 封面底部提示 */
+    .cover-hint{padding:10px;text-align:center;font-size:13px;color:#bba08a;background:#fff9f2;letter-spacing:.05em}
+    /* 文字区 */
+    .text-box{width:100%;padding:10px 18px 4px;background:#fff9f2;text-align:center}
+    .narration{font-size:clamp(15px,4.2vw,20px);line-height:1.75;color:#3d2b1f;font-weight:500}
+    .dialogue{margin-top:5px;font-size:clamp(13px,3.4vw,17px);color:#7a5c3a;font-style:italic}
+    .pg-num{font-size:12px;color:#bba08a;padding:2px 0 6px;text-align:center;background:#fff9f2}
+    /* 导航箭头 */
+    .nav{position:fixed;top:48%;transform:translateY(-50%);background:rgba(255,255,255,.82);border:none;border-radius:50%;width:40px;height:40px;font-size:22px;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.15);z-index:10;display:flex;align-items:center;justify-content:center;transition:opacity .2s}
+    .nav:disabled{opacity:.12;cursor:default}
+    #prev{left:6px}
+    #next{right:6px}
+  </style>
+</head>
+<body>
+<div class="book">
+  <div class="slides-wrap" id="slides">
+    
+    <div class="slide cover-slide">
+      <div class="img-wrap cover-img-wrap">
+        <img src="https://supercqz-dev.github.io/stories-viewer/2026-05-21-ngWq2T28/cover.png" alt="封面" loading="eager" />
+        <div class="cover-title-overlay">
+          <span class="cover-title-text">说到做到的小水水</span>
+        </div>
+      </div>
+      <div class="cover-hint">向右滑动开始阅读 →</div>
+    </div>
+    
+    <div class="slide">
+      <div class="img-wrap">
+        <img src="https://supercqz-dev.github.io/stories-viewer/2026-05-21-ngWq2T28/page-1.png" alt="第1页" loading="lazy" />
+      </div>
+      <div class="text-box">
+        <p class="narration">春天的早晨，妈妈和水水拉勾约定</p>
+        <p class="dialogue">"妈妈：“今天买玩具只能选一个哦”，水水：“好~”"</p>
+      </div>
+      <div class="pg-num">1 / 8</div>
+    </div>
+
+    <div class="slide">
+      <div class="img-wrap">
+        <img src="https://supercqz-dev.github.io/stories-viewer/2026-05-21-ngWq2T28/page-2.png" alt="第2页" loading="lazy" />
+      </div>
+      <div class="text-box">
+        <p class="narration">放学啦，姥姥来接水水回家。王老师跟水水说拜拜，水水也跟王老师说明天见。</p>
+        <p class="dialogue">"姥姥：“我们顺路去超市逛一逛呀”"</p>
+      </div>
+      <div class="pg-num">2 / 8</div>
+    </div>
+
+    <div class="slide">
+      <div class="img-wrap">
+        <img src="https://supercqz-dev.github.io/stories-viewer/2026-05-21-ngWq2T28/page-3.png" alt="第3页" loading="lazy" />
+      </div>
+      <div class="text-box">
+        <p class="narration">超市的玩具区，好多好玩的东西呀</p>
+        
+      </div>
+      <div class="pg-num">3 / 8</div>
+    </div>
+
+    <div class="slide">
+      <div class="img-wrap">
+        <img src="https://supercqz-dev.github.io/stories-viewer/2026-05-21-ngWq2T28/page-4.png" alt="第4页" loading="lazy" />
+      </div>
+      <div class="text-box">
+        <p class="narration">旋转木马和毛绒兔，水水两个都想要</p>
+        
+      </div>
+      <div class="pg-num">4 / 8</div>
+    </div>
+
+    <div class="slide">
+      <div class="img-wrap">
+        <img src="https://supercqz-dev.github.io/stories-viewer/2026-05-21-ngWq2T28/page-5.png" alt="第5页" loading="lazy" />
+      </div>
+      <div class="text-box">
+        <p class="narration">水水忽然想起和妈妈的约定哦</p>
+        
+      </div>
+      <div class="pg-num">5 / 8</div>
+    </div>
+
+    <div class="slide">
+      <div class="img-wrap">
+        <img src="https://supercqz-dev.github.io/stories-viewer/2026-05-21-ngWq2T28/page-6.png" alt="第6页" loading="lazy" />
+      </div>
+      <div class="text-box">
+        <p class="narration">水水和小兔子说拜拜，选了旋转木马</p>
+        <p class="dialogue">"水水：“小兔子再见哦”"</p>
+      </div>
+      <div class="pg-num">6 / 8</div>
+    </div>
+
+    <div class="slide">
+      <div class="img-wrap">
+        <img src="https://supercqz-dev.github.io/stories-viewer/2026-05-21-ngWq2T28/page-7.png" alt="第7页" loading="lazy" />
+      </div>
+      <div class="text-box">
+        <p class="narration">姥姥带水水结完账，要回家啦</p>
+        <p class="dialogue">"姥姥：“我们水水真懂事呀”"</p>
+      </div>
+      <div class="pg-num">7 / 8</div>
+    </div>
+
+    <div class="slide">
+      <div class="img-wrap">
+        <img src="https://supercqz-dev.github.io/stories-viewer/2026-05-21-ngWq2T28/page-8.png" alt="第8页" loading="lazy" />
+      </div>
+      <div class="text-box">
+        <p class="narration">妈妈夸奖水水，真是说到做到的好宝贝</p>
+        <p class="dialogue">"妈妈：“我们水水太棒啦！”"</p>
+      </div>
+      <div class="pg-num">8 / 8</div>
+    </div>
+  </div>
+  <button class="nav" id="prev" disabled>&#8249;</button>
+  <button class="nav" id="next">&#8250;</button>
+</div>
+<script>
+  const slides=document.getElementById('slides');
+  const prev=document.getElementById('prev');
+  const next=document.getElementById('next');
+  const total=9;
+  let cur=0,sx=0,sy=0;
+  function go(n){
+    cur=Math.max(0,Math.min(n,total-1));
+    slides.style.transform='translateX(-'+(cur*100)+'%)';
+    prev.disabled=cur===0;next.disabled=cur===total-1;
+  }
+  prev.addEventListener('click',()=>go(cur-1));
+  next.addEventListener('click',()=>go(cur+1));
+  slides.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY},{passive:true});
+  slides.addEventListener('touchend',e=>{
+    const dx=sx-e.changedTouches[0].clientX,dy=Math.abs(e.changedTouches[0].clientY-sy);
+    if(Math.abs(dx)>40&&Math.abs(dx)>dy)go(cur+(dx>0?1:-1));
+  });
+  document.addEventListener('keydown',e=>{if(e.key==='ArrowRight')go(cur+1);if(e.key==='ArrowLeft')go(cur-1);});
+</script>
+</body>
+</html>
