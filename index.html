@@ -6,11 +6,41 @@
   <title>小花的绘本故事集</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: "PingFang SC", "Microsoft YaHei", sans-serif; background: #fff8f0; min-height: 100vh; }
-    header { background: linear-gradient(135deg, #ff9f7f 0%, #ffcba4 100%); padding: 40px 20px 28px; text-align: center; }
+    body {
+      font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+      background: #fff8f0;
+      min-height: 100vh;
+    }
+    header {
+      background: linear-gradient(135deg, #ff9f7f 0%, #ffcba4 100%);
+      padding: 32px 20px 24px;
+      text-align: center;
+    }
     header h1 { font-size: 28px; color: #fff; font-weight: 700; text-shadow: 0 1px 4px rgba(0,0,0,0.15); }
-    header p { color: rgba(255,255,255,0.9); font-size: 14px; margin-top: 8px; }
-    .empty { text-align: center; color: #bba08a; padding: 80px 20px; font-size: 16px; }
+    header p { color: rgba(255,255,255,0.9); font-size: 14px; margin-top: 6px; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 16px;
+      padding: 20px 16px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      overflow: hidden;
+      text-decoration: none;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .card:active { transform: scale(0.97); }
+    .thumb { aspect-ratio: 1; overflow: hidden; background: #f5f0e8; }
+    .thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .card-body { padding: 10px 12px 12px; }
+    .card-title { font-size: 14px; font-weight: 600; color: #3d2b1f; line-height: 1.4; }
+    .card-date { font-size: 12px; color: #bba08a; margin-top: 4px; }
+    .empty { text-align: center; color: #bba08a; padding: 60px 20px; font-size: 15px; }
   </style>
 </head>
 <body>
@@ -18,6 +48,17 @@
     <h1>📚 小花的绘本故事集</h1>
     <p>专属原创故事，爸爸妈妈用爱制作</p>
   </header>
-  <div class="empty">还没有故事，快去创作第一本吧！🌟</div>
+  <div class="grid">
+    
+    <a class="card" href="https://supercqz-dev.github.io/stories-viewer/2026-05-21-vPqFZUHh/">
+      <div class="thumb">
+        <img src="https://supercqz-dev.github.io/stories-viewer/2026-05-21-vPqFZUHh/page-1.webp" alt="水水保护小兔子" loading="lazy" />
+      </div>
+      <div class="card-body">
+        <div class="card-title">水水保护小兔子</div>
+        <div class="card-date">2026/5/21</div>
+      </div>
+    </a>
+  </div>
 </body>
 </html>
