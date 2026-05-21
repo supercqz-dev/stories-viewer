@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>水水保护小兔子</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      width: 100%; height: 100%; overflow: hidden;
+      background: #fff8f0;
+      font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+      touch-action: pan-y;
+    }
+    .book-container {
+      width: 100%; height: 100vh;
+      overflow: hidden; position: relative;
+    }
+    .slides-wrapper {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .slide {
+      min-width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px;
+    }
+    .image-container {
+      flex: 1;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border-radius: 20px;
+      background: #f5f0e8;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+    .image-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 20px;
+    }
+    .text-container {
+      width: 100%;
+      padding: 14px 12px 6px;
+      text-align: center;
+    }
+    .narration {
+      font-size: clamp(16px, 4.5vw, 22px);
+      line-height: 1.7;
+      color: #3d2b1f;
+      font-weight: 500;
+    }
+    .dialogue {
+      margin-top: 8px;
+      font-size: clamp(14px, 3.5vw, 18px);
+      color: #7a5c3a;
+      font-style: italic;
+    }
+    .page-indicator {
+      font-size: 13px;
+      color: #bba08a;
+      padding: 4px 0 2px;
+    }
+    .nav-btn {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255,255,255,0.85);
+      border: none;
+      border-radius: 50%;
+      width: 44px; height: 44px;
+      font-size: 20px;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      z-index: 10;
+      display: flex; align-items: center; justify-content: center;
+      transition: opacity 0.2s;
+    }
+    .nav-btn:disabled { opacity: 0.2; cursor: default; }
+    #prev-btn { left: 8px; }
+    #next-btn { right: 8px; }
+    .cover-page {
+      background: linear-gradient(160deg, #fff0e6 0%, #fce4d6 100%);
+    }
+    .cover-title {
+      font-size: clamp(22px, 6vw, 32px);
+      font-weight: 700;
+      color: #c0624a;
+      text-align: center;
+      padding: 20px 16px 8px;
+      line-height: 1.4;
+    }
+    .cover-date {
+      font-size: 13px;
+      color: #bba08a;
+    }
+  </style>
+</head>
+<body>
+  <div class="book-container">
+    <div class="slides-wrapper" id="slides">
+      <div class="slide cover-page">
+        <div class="image-container">
+          <img src="https://supercqz-dev.github.io/stories-viewer/2026-05-21-vPqFZUHh/page-1.webp" alt="封面" loading="eager" />
+        </div>
+        <div class="text-container">
+          <div class="cover-title">水水保护小兔子</div>
+          <div class="cover-date">2026/5/21</div>
+        </div>
+        <div class="page-indicator">向右滑动开始阅读 →</div>
+      </div>
+      
+    <div class="slide" data-page="1">
+      <div class="image-container">
+        <img src="https://supercqz-dev.github.io/stories-viewer/2026-05-21-vPqFZUHh/page-1.webp" alt="第1页" loading="lazy" />
+      </div>
+      <div class="text-container">
+        <p class="narration">春天的幼儿园，水水带了最爱的星黛露来玩</p>
+        <p class="dialogue">"水水：“你看我的小兔子耳朵翘不翘？”"</p>
+      </div>
+      <div class="page-indicator">1 / 9</div>
+    </div>
+
+    <div class="slide" data-page="2">
+      <div class="image-container">
+        <img src="https://supercqz-dev.github.io/stories-viewer/2026-05-21-vPqFZUHh/page-2.webp" alt="第2页" loading="lazy" />
+      </div>
+      <div class="text-container">
+        <p class="narration">好朋友伸手，用力掰小兔子的长耳朵</p>
+        <p class="dialogue">"水水：“呀！”"</p>
+      </div>
+      <div class="page-indicator">2 / 9</div>
+    </div>
+
+    <div class="slide" data-page="3">
+      <div class="image-container">
+        <img src="https://supercqz-dev.github.io/stories-viewer/2026-05-21-vPqFZUHh/page-3.webp" alt="第3页" loading="lazy" />
+      </div>
+      <div class="text-container">
+        <p class="narration">放学回家，水水瘪着小嘴，有点不开心</p>
+        <p class="dialogue">"水水：“妈妈，果儿掰我的小兔子耳朵。”"</p>
+      </div>
+      <div class="page-indicator">3 / 9</div>
+    </div>
+
+    <div class="slide" data-page="4">
+      <div class="image-container">
+        <img src="https://supercqz-dev.github.io/stories-viewer/2026-05-21-vPqFZUHh/page-4.webp" alt="第4页" loading="lazy" />
+      </div>
+      <div class="text-container">
+        <p class="narration">回到家，水水越想越生气，脸鼓鼓的</p>
+        <p class="dialogue">"水水：“我以后再也不带这只兔子去幼儿园了！”"</p>
+      </div>
+      <div class="page-indicator">4 / 9</div>
+    </div>
+
+    <div class="slide" data-page="5">
+      <div class="image-container">
+        <img src="https://supercqz-dev.github.io/stories-viewer/2026-05-21-vPqFZUHh/page-5.webp" alt="第5页" loading="lazy" />
+      </div>
+      <div class="text-container">
+        <p class="narration">妈妈坐过来，温柔地摸了摸水水的头</p>
+        <p class="dialogue">"妈妈：“水水我们换个办法好不好呀？”"</p>
+      </div>
+      <div class="page-indicator">5 / 9</div>
+    </div>
+
+    <div class="slide" data-page="6">
+      <div class="image-container">
+        <img src="https://supercqz-dev.github.io/stories-viewer/2026-05-21-vPqFZUHh/page-6.webp" alt="第6页" loading="lazy" />
+      </div>
+      <div class="text-container">
+        <p class="narration">你可以告诉好朋友，不能掰小兔耳朵哦</p>
+        <p class="dialogue">"妈妈：“它会疼的，我们要保护自己的玩具呀。”"</p>
+      </div>
+      <div class="page-indicator">6 / 9</div>
+    </div>
+
+    <div class="slide" data-page="7">
+      <div class="image-container">
+        <img src="https://supercqz-dev.github.io/stories-viewer/2026-05-21-vPqFZUHh/page-7.webp" alt="第7页" loading="lazy" />
+      </div>
+      <div class="text-container">
+        <p class="narration">爸爸也攥着小拳头，给水水加油打气</p>
+        <p class="dialogue">"爸爸：“水水最勇敢啦，一定能做到的！”"</p>
+      </div>
+      <div class="page-indicator">7 / 9</div>
+    </div>
+
+    <div class="slide" data-page="8">
+      <div class="image-container">
+        <img src="https://supercqz-dev.github.io/stories-viewer/2026-05-21-vPqFZUHh/page-8.webp" alt="第8页" loading="lazy" />
+      </div>
+      <div class="text-container">
+        <p class="narration">第二天，水水又带着星黛露去幼儿园啦</p>
+        <p class="dialogue">"水水：“今天我要告诉好朋友，不许掰小兔耳朵！”"</p>
+      </div>
+      <div class="page-indicator">8 / 9</div>
+    </div>
+
+    <div class="slide" data-page="9">
+      <div class="image-container">
+        <img src="https://supercqz-dev.github.io/stories-viewer/2026-05-21-vPqFZUHh/page-9.webp" alt="第9页" loading="lazy" />
+      </div>
+      <div class="text-container">
+        <p class="narration">水水勇敢说出想法，大家都更爱护玩具啦</p>
+        <p class="dialogue">"水水：“不能掰耳朵哦，小兔子会痛的！”"</p>
+      </div>
+      <div class="page-indicator">9 / 9</div>
+    </div>
+    </div>
+    <button class="nav-btn" id="prev-btn" disabled>&#8249;</button>
+    <button class="nav-btn" id="next-btn">&#8250;</button>
+  </div>
+  <script>
+    const slides = document.getElementById('slides');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const totalSlides = 10;
+    let current = 0;
+    let startX = 0;
+
+    function goTo(n) {
+      current = Math.max(0, Math.min(n, totalSlides - 1));
+      slides.style.transform = 'translateX(-' + (current * 100) + '%)';
+      prevBtn.disabled = current === 0;
+      nextBtn.disabled = current === totalSlides - 1;
+    }
+
+    prevBtn.addEventListener('click', () => goTo(current - 1));
+    nextBtn.addEventListener('click', () => goTo(current + 1));
+
+    slides.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
+    slides.addEventListener('touchend', e => {
+      const diff = startX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 40) goTo(current + (diff > 0 ? 1 : -1));
+    });
+  </script>
+</body>
+</html>
