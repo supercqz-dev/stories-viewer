@@ -1,249 +1,47 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <meta name="mobile-web-app-capable" content="yes"/>
   <title>水水保护小兔子</title>
+  <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&display=swap" rel="stylesheet"/>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body {
-      width: 100%; height: 100%; overflow: hidden;
-      background: #fff8f0;
-      font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
-      touch-action: pan-y;
-    }
-    .book-container {
-      width: 100%; height: 100vh;
-      overflow: hidden; position: relative;
-    }
-    .slides-wrapper {
-      display: flex;
-      width: 100%;
-      height: 100%;
-      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .slide {
-      min-width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: space-between;
-      padding: 16px;
-    }
-    .image-container {
-      flex: 1;
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      border-radius: 20px;
-      background: #f5f0e8;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-    }
-    .image-container img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 20px;
-    }
-    .text-container {
-      width: 100%;
-      padding: 14px 12px 6px;
-      text-align: center;
-    }
-    .narration {
-      font-size: clamp(16px, 4.5vw, 22px);
-      line-height: 1.7;
-      color: #3d2b1f;
-      font-weight: 500;
-    }
-    .dialogue {
-      margin-top: 8px;
-      font-size: clamp(14px, 3.5vw, 18px);
-      color: #7a5c3a;
-      font-style: italic;
-    }
-    .page-indicator {
-      font-size: 13px;
-      color: #bba08a;
-      padding: 4px 0 2px;
-    }
-    .nav-btn {
-      position: fixed;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(255,255,255,0.85);
-      border: none;
-      border-radius: 50%;
-      width: 44px; height: 44px;
-      font-size: 20px;
-      cursor: pointer;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-      z-index: 10;
-      display: flex; align-items: center; justify-content: center;
-      transition: opacity 0.2s;
-    }
-    .nav-btn:disabled { opacity: 0.2; cursor: default; }
-    #prev-btn { left: 8px; }
-    #next-btn { right: 8px; }
-    .cover-page {
-      background: linear-gradient(160deg, #fff0e6 0%, #fce4d6 100%);
-    }
-    .cover-title {
-      font-size: clamp(22px, 6vw, 32px);
-      font-weight: 700;
-      color: #c0624a;
-      text-align: center;
-      padding: 20px 16px 8px;
-      line-height: 1.4;
-    }
-    .cover-date {
-      font-size: 13px;
-      color: #bba08a;
-    }
+    *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+    html,body{width:100%;height:100%;overflow:hidden;background:#000;touch-action:none}
+    #book{width:100%;height:100%;position:relative;overflow:hidden}
+    #reel{display:flex;width:100%;height:100%;will-change:transform;transition:transform .35s cubic-bezier(.4,0,.2,1)}
+    .slide{min-width:100vw;height:100%;position:relative;overflow:hidden;background:#000;flex-shrink:0}
+    .slide-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;display:block}
+    .cover-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:0 24px max(40px,env(safe-area-inset-bottom));background:linear-gradient(to top,rgba(0,0,0,.72) 0%,rgba(0,0,0,.3) 45%,transparent 100%);pointer-events:none}
+    .cover-title{font-family:"Ma Shan Zheng","STKaiti","KaiTi",serif;font-size:clamp(28px,8vw,52px);color:#fff8ee;letter-spacing:.14em;line-height:1.3;text-align:center;text-shadow:0 2px 16px rgba(0,0,0,.8),0 0 40px rgba(255,180,80,.35);margin-bottom:16px}
+    .swipe-hint{font-size:13px;color:rgba(255,255,255,.55);letter-spacing:.1em;margin-bottom:8px;animation:pulse 2s ease-in-out infinite}
+    @keyframes pulse{0%,100%{opacity:.4}50%{opacity:.9}}
+    .text-overlay{position:absolute;left:0;right:0;bottom:0;padding:18px 20px max(18px,env(safe-area-inset-bottom));background:linear-gradient(to top,rgba(0,0,0,.78) 0%,rgba(0,0,0,.5) 60%,transparent 100%);pointer-events:none}
+    .narration{font-size:clamp(16px,4.5vw,22px);font-weight:500;color:#fff;line-height:1.7;text-align:center;text-shadow:0 1px 6px rgba(0,0,0,.6)}
+    .dialogue{margin-top:6px;font-size:clamp(14px,3.8vw,18px);color:rgba(255,230,180,1);font-style:italic;text-align:center;text-shadow:0 1px 4px rgba(0,0,0,.5)}
+    .pg-dot{position:absolute;top:max(14px,env(safe-area-inset-top));right:16px;font-size:12px;color:rgba(255,255,255,.45);font-weight:600;letter-spacing:.04em}
+    .pg-total{font-weight:400;opacity:.7}
   </style>
 </head>
 <body>
-  <div class="book-container">
-    <div class="slides-wrapper" id="slides">
-      <div class="slide cover-page">
-        <div class="image-container">
-          <img src="https://supercqz-dev.github.io/stories-viewer/2026-05-21-vPqFZUHh/page-1.webp" alt="封面" loading="eager" />
-        </div>
-        <div class="text-container">
-          <div class="cover-title">水水保护小兔子</div>
-          <div class="cover-date">2026/5/21</div>
-        </div>
-        <div class="page-indicator">向右滑动开始阅读 →</div>
-      </div>
-      
-    <div class="slide" data-page="1">
-      <div class="image-container">
-        <img src="https://supercqz-dev.github.io/stories-viewer/2026-05-21-vPqFZUHh/page-1.webp" alt="第1页" loading="lazy" />
-      </div>
-      <div class="text-container">
-        <p class="narration">春天的幼儿园，水水带了最爱的星黛露来玩</p>
-        <p class="dialogue">"水水：“你看我的小兔子耳朵翘不翘？”"</p>
-      </div>
-      <div class="page-indicator">1 / 9</div>
-    </div>
-
-    <div class="slide" data-page="2">
-      <div class="image-container">
-        <img src="https://supercqz-dev.github.io/stories-viewer/2026-05-21-vPqFZUHh/page-2.webp" alt="第2页" loading="lazy" />
-      </div>
-      <div class="text-container">
-        <p class="narration">好朋友伸手，用力掰小兔子的长耳朵</p>
-        <p class="dialogue">"水水：“呀！”"</p>
-      </div>
-      <div class="page-indicator">2 / 9</div>
-    </div>
-
-    <div class="slide" data-page="3">
-      <div class="image-container">
-        <img src="https://supercqz-dev.github.io/stories-viewer/2026-05-21-vPqFZUHh/page-3.webp" alt="第3页" loading="lazy" />
-      </div>
-      <div class="text-container">
-        <p class="narration">放学回家，水水瘪着小嘴，有点不开心</p>
-        <p class="dialogue">"水水：“妈妈，果儿掰我的小兔子耳朵。”"</p>
-      </div>
-      <div class="page-indicator">3 / 9</div>
-    </div>
-
-    <div class="slide" data-page="4">
-      <div class="image-container">
-        <img src="https://supercqz-dev.github.io/stories-viewer/2026-05-21-vPqFZUHh/page-4.webp" alt="第4页" loading="lazy" />
-      </div>
-      <div class="text-container">
-        <p class="narration">回到家，水水越想越生气，脸鼓鼓的</p>
-        <p class="dialogue">"水水：“我以后再也不带这只兔子去幼儿园了！”"</p>
-      </div>
-      <div class="page-indicator">4 / 9</div>
-    </div>
-
-    <div class="slide" data-page="5">
-      <div class="image-container">
-        <img src="https://supercqz-dev.github.io/stories-viewer/2026-05-21-vPqFZUHh/page-5.webp" alt="第5页" loading="lazy" />
-      </div>
-      <div class="text-container">
-        <p class="narration">妈妈坐过来，温柔地摸了摸水水的头</p>
-        <p class="dialogue">"妈妈：“水水我们换个办法好不好呀？”"</p>
-      </div>
-      <div class="page-indicator">5 / 9</div>
-    </div>
-
-    <div class="slide" data-page="6">
-      <div class="image-container">
-        <img src="https://supercqz-dev.github.io/stories-viewer/2026-05-21-vPqFZUHh/page-6.webp" alt="第6页" loading="lazy" />
-      </div>
-      <div class="text-container">
-        <p class="narration">你可以告诉好朋友，不能掰小兔耳朵哦</p>
-        <p class="dialogue">"妈妈：“它会疼的，我们要保护自己的玩具呀。”"</p>
-      </div>
-      <div class="page-indicator">6 / 9</div>
-    </div>
-
-    <div class="slide" data-page="7">
-      <div class="image-container">
-        <img src="https://supercqz-dev.github.io/stories-viewer/2026-05-21-vPqFZUHh/page-7.webp" alt="第7页" loading="lazy" />
-      </div>
-      <div class="text-container">
-        <p class="narration">爸爸也攥着小拳头，给水水加油打气</p>
-        <p class="dialogue">"爸爸：“水水最勇敢啦，一定能做到的！”"</p>
-      </div>
-      <div class="page-indicator">7 / 9</div>
-    </div>
-
-    <div class="slide" data-page="8">
-      <div class="image-container">
-        <img src="https://supercqz-dev.github.io/stories-viewer/2026-05-21-vPqFZUHh/page-8.webp" alt="第8页" loading="lazy" />
-      </div>
-      <div class="text-container">
-        <p class="narration">第二天，水水又带着星黛露去幼儿园啦</p>
-        <p class="dialogue">"水水：“今天我要告诉好朋友，不许掰小兔耳朵！”"</p>
-      </div>
-      <div class="page-indicator">8 / 9</div>
-    </div>
-
-    <div class="slide" data-page="9">
-      <div class="image-container">
-        <img src="https://supercqz-dev.github.io/stories-viewer/2026-05-21-vPqFZUHh/page-9.webp" alt="第9页" loading="lazy" />
-      </div>
-      <div class="text-container">
-        <p class="narration">水水勇敢说出想法，大家都更爱护玩具啦</p>
-        <p class="dialogue">"水水：“不能掰耳朵哦，小兔子会痛的！”"</p>
-      </div>
-      <div class="page-indicator">9 / 9</div>
-    </div>
-    </div>
-    <button class="nav-btn" id="prev-btn" disabled>&#8249;</button>
-    <button class="nav-btn" id="next-btn">&#8250;</button>
-  </div>
-  <script>
-    const slides = document.getElementById('slides');
-    const prevBtn = document.getElementById('prev-btn');
-    const nextBtn = document.getElementById('next-btn');
-    const totalSlides = 10;
-    let current = 0;
-    let startX = 0;
-
-    function goTo(n) {
-      current = Math.max(0, Math.min(n, totalSlides - 1));
-      slides.style.transform = 'translateX(-' + (current * 100) + '%)';
-      prevBtn.disabled = current === 0;
-      nextBtn.disabled = current === totalSlides - 1;
-    }
-
-    prevBtn.addEventListener('click', () => goTo(current - 1));
-    nextBtn.addEventListener('click', () => goTo(current + 1));
-
-    slides.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
-    slides.addEventListener('touchend', e => {
-      const diff = startX - e.changedTouches[0].clientX;
-      if (Math.abs(diff) > 40) goTo(current + (diff > 0 ? 1 : -1));
-    });
-  </script>
+<div id="book"><div id="reel"><div class="slide" data-page="0"><img class="slide-img" src="https://supercqz-dev.github.io/stories-viewer/2026-05-21-vPqFZUHh/cover.png" alt="封面" loading="eager"/><div class="cover-overlay"><span class="cover-title">水水保护小兔子</span><span class="swipe-hint">向左滑动开始阅读</span></div></div><div class="slide" data-page="1"><img class="slide-img" src="https://supercqz-dev.github.io/stories-viewer/2026-05-21-vPqFZUHh/page-1.webp" alt="第1页" loading="lazy"/><div class="text-overlay"><p class="narration">春天的幼儿园，水水带了最爱的星黛露来玩</p></div><div class="pg-dot">1<span class="pg-total">/9</span></div></div><div class="slide" data-page="2"><img class="slide-img" src="https://supercqz-dev.github.io/stories-viewer/2026-05-21-vPqFZUHh/page-2.webp" alt="第2页" loading="lazy"/><div class="text-overlay"><p class="narration">好朋友伸手，用力掰小兔子的长耳朵</p></div><div class="pg-dot">2<span class="pg-total">/9</span></div></div><div class="slide" data-page="3"><img class="slide-img" src="https://supercqz-dev.github.io/stories-viewer/2026-05-21-vPqFZUHh/page-3.webp" alt="第3页" loading="lazy"/><div class="text-overlay"><p class="narration">放学回家，水水瘪着小嘴，有点不开心</p></div><div class="pg-dot">3<span class="pg-total">/9</span></div></div><div class="slide" data-page="4"><img class="slide-img" src="https://supercqz-dev.github.io/stories-viewer/2026-05-21-vPqFZUHh/page-4.webp" alt="第4页" loading="lazy"/><div class="text-overlay"><p class="narration">妈妈温柔地问发生了什么</p></div><div class="pg-dot">4<span class="pg-total">/9</span></div></div><div class="slide" data-page="5"><img class="slide-img" src="https://supercqz-dev.github.io/stories-viewer/2026-05-21-vPqFZUHh/page-5.webp" alt="第5页" loading="lazy"/><div class="text-overlay"><p class="narration">水水委屈地说出了今天的事</p><p class="dialogue">"她掰我兔兔的耳朵！"</p></div><div class="pg-dot">5<span class="pg-total">/9</span></div></div><div class="slide" data-page="6"><img class="slide-img" src="https://supercqz-dev.github.io/stories-viewer/2026-05-21-vPqFZUHh/page-6.webp" alt="第6页" loading="lazy"/><div class="text-overlay"><p class="narration">妈妈说，要用语言保护自己的宝贝</p><p class="dialogue">"你可以直接告诉她不能掰"</p></div><div class="pg-dot">6<span class="pg-total">/9</span></div></div><div class="slide" data-page="7"><img class="slide-img" src="https://supercqz-dev.github.io/stories-viewer/2026-05-21-vPqFZUHh/page-7.webp" alt="第7页" loading="lazy"/><div class="text-overlay"><p class="narration">第二天，水水鼓起勇气开口了</p><p class="dialogue">"不可以掰耳朵，会坏掉的！"</p></div><div class="pg-dot">7<span class="pg-total">/9</span></div></div><div class="slide" data-page="8"><img class="slide-img" src="https://supercqz-dev.github.io/stories-viewer/2026-05-21-vPqFZUHh/page-8.webp" alt="第8页" loading="lazy"/><div class="text-overlay"><p class="narration">好朋友听了，轻轻摸了摸兔兔</p><p class="dialogue">"对不起，我以后不掰了"</p></div><div class="pg-dot">8<span class="pg-total">/9</span></div></div><div class="slide" data-page="9"><img class="slide-img" src="https://supercqz-dev.github.io/stories-viewer/2026-05-21-vPqFZUHh/page-9.webp" alt="第9页" loading="lazy"/><div class="text-overlay"><p class="narration">水水搂着星黛露，满足地笑了</p></div><div class="pg-dot">9<span class="pg-total">/9</span></div></div></div></div>
+<script>
+(function(){
+  const reel=document.getElementById('reel');
+  const TOTAL=10;
+  let cur=0,sx=0,sy=0,dragging=false,startT=0;
+  function tryFullscreen(){const el=document.documentElement;const req=el.requestFullscreen||el.webkitRequestFullscreen||el.mozRequestFullScreen;if(req)req.call(el).catch(()=>{});}
+  function go(n,a=true){n=Math.max(0,Math.min(n,TOTAL-1));if(!a){reel.style.transition='none';}reel.style.transform='translateX(-'+(n*100)+'vw)';if(!a){void reel.offsetWidth;reel.style.transition='';}cur=n;}
+  reel.addEventListener('touchstart',function(e){sx=e.touches[0].clientX;sy=e.touches[0].clientY;startT=Date.now();dragging=true;reel.style.transition='none';},{passive:true});
+  reel.addEventListener('touchmove',function(e){if(!dragging)return;const dx=e.touches[0].clientX-sx;const dy=e.touches[0].clientY-sy;if(Math.abs(dy)>Math.abs(dx)&&Math.abs(dy)>10){dragging=false;reel.style.transition='';return;}reel.style.transform='translateX(calc(-'+(cur*100)+'vw + '+dx+'px))';},{passive:true});
+  reel.addEventListener('touchend',function(e){if(!dragging){reel.style.transition='';return;}dragging=false;reel.style.transition='transform .35s cubic-bezier(.4,0,.2,1)';const dx=sx-e.changedTouches[0].clientX;const dt=Date.now()-startT;const fast=dt<250&&Math.abs(dx)>30;const far=Math.abs(dx)>window.innerWidth*0.3;if((fast||far)&&dx>0)go(cur+1);else if((fast||far)&&dx<0)go(cur-1);else go(cur);},{passive:true});
+  document.addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' ')go(cur+1);if(e.key==='ArrowLeft')go(cur-1);});
+  document.addEventListener('click',tryFullscreen,{once:true});
+  document.addEventListener('touchend',tryFullscreen,{once:true});
+})();
+</script>
 </body>
 </html>
