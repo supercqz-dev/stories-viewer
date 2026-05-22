@@ -2,181 +2,46 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <meta name="mobile-web-app-capable" content="yes"/>
   <title>说到做到的小水水</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&display=swap" rel="stylesheet"/>
   <style>
-    *{box-sizing:border-box;margin:0;padding:0}
-    html,body{width:100%;height:100%;overflow:hidden;background:#1c1410;font-family:"PingFang SC","Microsoft YaHei",sans-serif;touch-action:pan-y}
-    .book{width:100%;height:100vh;overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center}
-    .slides-wrap{display:flex;width:100%;height:100%;transition:transform .38s cubic-bezier(.4,0,.2,1)}
-    .slide{min-width:100%;height:100%;display:flex;flex-direction:column;align-items:center;background:#fff9f2}
-    /* 9:16 图片区，自动撑满 */
-    .img-wrap{
-      width:100%;flex:1;overflow:hidden;background:#f0ebe3;
-      display:flex;align-items:center;justify-content:center
-    }
-    .img-wrap img{width:100%;height:100%;object-fit:contain}
-    .cover-slide .img-wrap img{object-fit:cover}
-    /* 封面标题 overlay */
-    .cover-img-wrap{position:relative}
-    .cover-title-overlay{
-      position:absolute;bottom:0;left:0;right:0;
-      padding:40px 24px 24px;
-      background:linear-gradient(to top,rgba(18,10,4,0.82) 0%,rgba(18,10,4,0.45) 55%,transparent 100%);
-      display:flex;align-items:flex-end;justify-content:center;
-      pointer-events:none
-    }
-    .cover-title-text{
-      font-family:"Ma Shan Zheng","STKaiti","KaiTi","华文楷体","PingFang SC",serif;
-      font-size:clamp(26px,7vw,44px);
-      color:#fff8ee;
-      letter-spacing:.12em;
-      line-height:1.3;
-      text-align:center;
-      text-shadow:0 2px 12px rgba(0,0,0,0.7),0 0 32px rgba(255,200,100,0.3);
-      white-space:pre-wrap;
-      word-break:break-all
-    }
-    /* 封面底部提示 */
-    .cover-hint{padding:10px;text-align:center;font-size:13px;color:#bba08a;background:#fff9f2;letter-spacing:.05em}
-    /* 文字区 */
-    .text-box{width:100%;padding:10px 18px 4px;background:#fff9f2;text-align:center}
-    .narration{font-size:clamp(15px,4.2vw,20px);line-height:1.75;color:#3d2b1f;font-weight:500}
-    .dialogue{margin-top:5px;font-size:clamp(13px,3.4vw,17px);color:#7a5c3a;font-style:italic}
-    .pg-num{font-size:12px;color:#bba08a;padding:2px 0 6px;text-align:center;background:#fff9f2}
-    /* 导航箭头 */
-    .nav{position:fixed;top:48%;transform:translateY(-50%);background:rgba(255,255,255,.82);border:none;border-radius:50%;width:40px;height:40px;font-size:22px;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.15);z-index:10;display:flex;align-items:center;justify-content:center;transition:opacity .2s}
-    .nav:disabled{opacity:.12;cursor:default}
-    #prev{left:6px}
-    #next{right:6px}
+    *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+    html,body{width:100%;height:100%;overflow:hidden;background:#000;touch-action:none}
+    #book{width:100%;height:100%;position:relative;overflow:hidden}
+    #reel{display:flex;width:100%;height:100%;will-change:transform;transition:transform .35s cubic-bezier(.4,0,.2,1)}
+    .slide{min-width:100vw;height:100%;position:relative;overflow:hidden;background:#000;flex-shrink:0}
+    .slide-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;display:block}
+    .cover-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:0 24px max(40px,env(safe-area-inset-bottom));background:linear-gradient(to top,rgba(0,0,0,.72) 0%,rgba(0,0,0,.3) 45%,transparent 100%);pointer-events:none}
+    .cover-title{font-family:"Ma Shan Zheng","STKaiti","KaiTi",serif;font-size:clamp(28px,8vw,52px);color:#fff8ee;letter-spacing:.14em;line-height:1.3;text-align:center;text-shadow:0 2px 16px rgba(0,0,0,.8),0 0 40px rgba(255,180,80,.35);margin-bottom:16px}
+    .swipe-hint{font-size:13px;color:rgba(255,255,255,.55);letter-spacing:.1em;margin-bottom:8px;animation:pulse 2s ease-in-out infinite}
+    @keyframes pulse{0%,100%{opacity:.4}50%{opacity:.9}}
+    .text-overlay{position:absolute;left:0;right:0;bottom:0;padding:18px 20px max(18px,env(safe-area-inset-bottom));background:linear-gradient(to top,rgba(0,0,0,.78) 0%,rgba(0,0,0,.5) 60%,transparent 100%);pointer-events:none}
+    .narration{font-size:clamp(16px,4.5vw,22px);font-weight:500;color:#fff;line-height:1.7;text-align:center;text-shadow:0 1px 6px rgba(0,0,0,.6)}
+    .dialogue{margin-top:6px;font-size:clamp(14px,3.8vw,18px);color:rgba(255,230,180,1);font-style:italic;text-align:center;text-shadow:0 1px 4px rgba(0,0,0,.5)}
+    .pg-dot{position:absolute;top:max(14px,env(safe-area-inset-top));right:16px;font-size:12px;color:rgba(255,255,255,.45);font-weight:600;letter-spacing:.04em}
+    .pg-total{font-weight:400;opacity:.7}
   </style>
 </head>
 <body>
-<div class="book">
-  <div class="slides-wrap" id="slides">
-    
-    <div class="slide cover-slide">
-      <div class="img-wrap cover-img-wrap">
-        <img src="https://supercqz-dev.github.io/stories-viewer/2026-05-21-ngWq2T28/cover.png" alt="封面" loading="eager" />
-        <div class="cover-title-overlay">
-          <span class="cover-title-text">说到做到的小水水</span>
-        </div>
-      </div>
-      <div class="cover-hint">向右滑动开始阅读 →</div>
-    </div>
-    
-    <div class="slide">
-      <div class="img-wrap">
-        <img src="https://supercqz-dev.github.io/stories-viewer/2026-05-21-ngWq2T28/page-1.png" alt="第1页" loading="lazy" />
-      </div>
-      <div class="text-box">
-        <p class="narration">春天的早晨，妈妈和水水拉勾约定</p>
-        <p class="dialogue">"妈妈：“今天买玩具只能选一个哦”，水水：“好~”"</p>
-      </div>
-      <div class="pg-num">1 / 8</div>
-    </div>
-
-    <div class="slide">
-      <div class="img-wrap">
-        <img src="https://supercqz-dev.github.io/stories-viewer/2026-05-21-ngWq2T28/page-2.png" alt="第2页" loading="lazy" />
-      </div>
-      <div class="text-box">
-        <p class="narration">放学啦，姥姥来接水水回家。王老师跟水水说拜拜，水水也跟王老师说明天见。</p>
-        <p class="dialogue">"姥姥：“我们顺路去超市逛一逛呀”"</p>
-      </div>
-      <div class="pg-num">2 / 8</div>
-    </div>
-
-    <div class="slide">
-      <div class="img-wrap">
-        <img src="https://supercqz-dev.github.io/stories-viewer/2026-05-21-ngWq2T28/page-3.png" alt="第3页" loading="lazy" />
-      </div>
-      <div class="text-box">
-        <p class="narration">超市的玩具区，好多好玩的东西呀</p>
-        
-      </div>
-      <div class="pg-num">3 / 8</div>
-    </div>
-
-    <div class="slide">
-      <div class="img-wrap">
-        <img src="https://supercqz-dev.github.io/stories-viewer/2026-05-21-ngWq2T28/page-4.png" alt="第4页" loading="lazy" />
-      </div>
-      <div class="text-box">
-        <p class="narration">旋转木马和毛绒兔，水水两个都想要</p>
-        
-      </div>
-      <div class="pg-num">4 / 8</div>
-    </div>
-
-    <div class="slide">
-      <div class="img-wrap">
-        <img src="https://supercqz-dev.github.io/stories-viewer/2026-05-21-ngWq2T28/page-5.png" alt="第5页" loading="lazy" />
-      </div>
-      <div class="text-box">
-        <p class="narration">水水忽然想起和妈妈的约定哦</p>
-        
-      </div>
-      <div class="pg-num">5 / 8</div>
-    </div>
-
-    <div class="slide">
-      <div class="img-wrap">
-        <img src="https://supercqz-dev.github.io/stories-viewer/2026-05-21-ngWq2T28/page-6.png" alt="第6页" loading="lazy" />
-      </div>
-      <div class="text-box">
-        <p class="narration">水水和小兔子说拜拜，选了旋转木马</p>
-        <p class="dialogue">"水水：“小兔子再见哦”"</p>
-      </div>
-      <div class="pg-num">6 / 8</div>
-    </div>
-
-    <div class="slide">
-      <div class="img-wrap">
-        <img src="https://supercqz-dev.github.io/stories-viewer/2026-05-21-ngWq2T28/page-7.png" alt="第7页" loading="lazy" />
-      </div>
-      <div class="text-box">
-        <p class="narration">姥姥带水水结完账，要回家啦</p>
-        <p class="dialogue">"姥姥：“我们水水真懂事呀”"</p>
-      </div>
-      <div class="pg-num">7 / 8</div>
-    </div>
-
-    <div class="slide">
-      <div class="img-wrap">
-        <img src="https://supercqz-dev.github.io/stories-viewer/2026-05-21-ngWq2T28/page-8.png" alt="第8页" loading="lazy" />
-      </div>
-      <div class="text-box">
-        <p class="narration">妈妈夸奖水水，真是说到做到的好宝贝</p>
-        <p class="dialogue">"妈妈：“我们水水太棒啦！”"</p>
-      </div>
-      <div class="pg-num">8 / 8</div>
-    </div>
-  </div>
-  <button class="nav" id="prev" disabled>&#8249;</button>
-  <button class="nav" id="next">&#8250;</button>
-</div>
+<div id="book"><div id="reel"><div class="slide" data-page="0"><img class="slide-img" src="https://supercqz-dev.github.io/stories-viewer/2026-05-21-ngWq2T28/cover.png" alt="封面" loading="eager"/><div class="cover-overlay"><span class="cover-title">说到做到的小水水</span><span class="swipe-hint">向左滑动开始阅读</span></div></div><div class="slide" data-page="1"><img class="slide-img" src="https://supercqz-dev.github.io/stories-viewer/2026-05-21-ngWq2T28/page-1.png" alt="第1页" loading="lazy"/><div class="text-overlay"><p class="narration">水水在幼儿园里发现画笔盒不见了</p></div><div class="pg-dot">1<span class="pg-total">/8</span></div></div><div class="slide" data-page="2"><img class="slide-img" src="https://supercqz-dev.github.io/stories-viewer/2026-05-21-ngWq2T28/page-2.png" alt="第2页" loading="lazy"/><div class="text-overlay"><p class="narration">好朋友小熊说他借走了，没还</p><p class="dialogue">"你为什么不打招呼就拿走？"</p></div><div class="pg-dot">2<span class="pg-total">/8</span></div></div><div class="slide" data-page="3"><img class="slide-img" src="https://supercqz-dev.github.io/stories-viewer/2026-05-21-ngWq2T28/page-3.png" alt="第3页" loading="lazy"/><div class="text-overlay"><p class="narration">水水心里很不高兴，想走开不理他</p></div><div class="pg-dot">3<span class="pg-total">/8</span></div></div><div class="slide" data-page="4"><img class="slide-img" src="https://supercqz-dev.github.io/stories-viewer/2026-05-21-ngWq2T28/page-4.png" alt="第4页" loading="lazy"/><div class="text-overlay"><p class="narration">妈妈说，说出来才是解决问题</p><p class="dialogue">"你要直接告诉他你的感受"</p></div><div class="pg-dot">4<span class="pg-total">/8</span></div></div><div class="slide" data-page="5"><img class="slide-img" src="https://supercqz-dev.github.io/stories-viewer/2026-05-21-ngWq2T28/page-5.png" alt="第5页" loading="lazy"/><div class="text-overlay"><p class="narration">水水鼓起勇气，走向小熊</p><p class="dialogue">"你拿了我的画笔，我很不开心"</p></div><div class="pg-dot">5<span class="pg-total">/8</span></div></div><div class="slide" data-page="6"><img class="slide-img" src="https://supercqz-dev.github.io/stories-viewer/2026-05-21-ngWq2T28/page-6.png" alt="第6页" loading="lazy"/><div class="text-overlay"><p class="narration">小熊愣了一下，连忙道歉</p><p class="dialogue">"对不起，我以后会先问你的"</p></div><div class="pg-dot">6<span class="pg-total">/8</span></div></div><div class="slide" data-page="7"><img class="slide-img" src="https://supercqz-dev.github.io/stories-viewer/2026-05-21-ngWq2T28/page-7.png" alt="第7页" loading="lazy"/><div class="text-overlay"><p class="narration">两个人和好了，一起画画</p></div><div class="pg-dot">7<span class="pg-total">/8</span></div></div><div class="slide" data-page="8"><img class="slide-img" src="https://supercqz-dev.github.io/stories-viewer/2026-05-21-ngWq2T28/page-8.png" alt="第8页" loading="lazy"/><div class="text-overlay"><p class="narration">水水笑了，说出来真的管用！</p></div><div class="pg-dot">8<span class="pg-total">/8</span></div></div></div></div>
 <script>
-  const slides=document.getElementById('slides');
-  const prev=document.getElementById('prev');
-  const next=document.getElementById('next');
-  const total=9;
-  let cur=0,sx=0,sy=0;
-  function go(n){
-    cur=Math.max(0,Math.min(n,total-1));
-    slides.style.transform='translateX(-'+(cur*100)+'%)';
-    prev.disabled=cur===0;next.disabled=cur===total-1;
-  }
-  prev.addEventListener('click',()=>go(cur-1));
-  next.addEventListener('click',()=>go(cur+1));
-  slides.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY},{passive:true});
-  slides.addEventListener('touchend',e=>{
-    const dx=sx-e.changedTouches[0].clientX,dy=Math.abs(e.changedTouches[0].clientY-sy);
-    if(Math.abs(dx)>40&&Math.abs(dx)>dy)go(cur+(dx>0?1:-1));
-  });
-  document.addEventListener('keydown',e=>{if(e.key==='ArrowRight')go(cur+1);if(e.key==='ArrowLeft')go(cur-1);});
+(function(){
+  const reel=document.getElementById('reel');
+  const TOTAL=9;
+  let cur=0,sx=0,sy=0,dragging=false,startT=0;
+  function tryFullscreen(){const el=document.documentElement;const req=el.requestFullscreen||el.webkitRequestFullscreen||el.mozRequestFullScreen;if(req)req.call(el).catch(()=>{});}
+  function go(n,a=true){n=Math.max(0,Math.min(n,TOTAL-1));if(!a){reel.style.transition='none';}reel.style.transform='translateX(-'+(n*100)+'vw)';if(!a){void reel.offsetWidth;reel.style.transition='';}cur=n;}
+  reel.addEventListener('touchstart',function(e){sx=e.touches[0].clientX;sy=e.touches[0].clientY;startT=Date.now();dragging=true;reel.style.transition='none';},{passive:true});
+  reel.addEventListener('touchmove',function(e){if(!dragging)return;const dx=e.touches[0].clientX-sx;const dy=e.touches[0].clientY-sy;if(Math.abs(dy)>Math.abs(dx)&&Math.abs(dy)>10){dragging=false;reel.style.transition='';return;}reel.style.transform='translateX(calc(-'+(cur*100)+'vw + '+dx+'px))';},{passive:true});
+  reel.addEventListener('touchend',function(e){if(!dragging){reel.style.transition='';return;}dragging=false;reel.style.transition='transform .35s cubic-bezier(.4,0,.2,1)';const dx=sx-e.changedTouches[0].clientX;const dt=Date.now()-startT;const fast=dt<250&&Math.abs(dx)>30;const far=Math.abs(dx)>window.innerWidth*0.3;if((fast||far)&&dx>0)go(cur+1);else if((fast||far)&&dx<0)go(cur-1);else go(cur);},{passive:true});
+  document.addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' ')go(cur+1);if(e.key==='ArrowLeft')go(cur-1);});
+  document.addEventListener('click',tryFullscreen,{once:true});
+  document.addEventListener('touchend',tryFullscreen,{once:true});
+})();
 </script>
 </body>
 </html>
